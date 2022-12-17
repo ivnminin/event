@@ -1,0 +1,6 @@
+[submodule "contracts"]
+	path = contracts
+	url = git@github.com:ivnminin/market-place.git
+[submodule "api"]
+	path = api
+	url = https://github.com/ivnminin/indexer-event
