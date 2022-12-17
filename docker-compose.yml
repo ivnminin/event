@@ -11,7 +11,7 @@ services:
 
   api:
     image: api
-    build: ./api
+    build: api_backup
 #    environment:
 #      SECRET_KEY: '${SECRET_KEY}'
 #      DB_NAME: '${DB_NAME}'
@@ -25,7 +25,7 @@ services:
 
   indexer_token:
     image: api
-    build: ./api
+    build: api_backup
     volumes:
       - data:/app/contracts
 #    environment:
