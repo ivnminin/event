@@ -1,44 +1,42 @@
 version: '3'
 services:
-#  api_db:
-#    image: postgres
-#    volumes:
-#      - db:/var/lib/postgresql/data
-#    environment:
-#      POSTGRES_DB: '${DB_NAME}'
-#      POSTGRES_USER: '${DB_USER}'
-#      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+  api_db:
+    image: postgres
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: '${DB_NAME}'
+      POSTGRES_USER: '${DB_USER}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
 
   api:
     image: api
-    build: api_backup
-#    environment:
-#      SECRET_KEY: '${SECRET_KEY}'
-#      DB_NAME: '${DB_NAME}'
-#      DB_USER: '${DB_USER}'
-#      DB_PASSWORD: '${DB_PASSWORD}'
-#      DB_PORT: '5432'
-#      DB_HOST: api_db
+    build: ./api
+    environment:
+      DB_NAME: '${DB_NAME}'
+      DB_USER: '${DB_USER}'
+      DB_PASSWORD: '${DB_PASSWORD}'
+      DB_PORT: '5432'
+      DB_HOST: api_db
     restart: on-failure
-#    depends_on:
-#      - api_db
+    depends_on:
+      - api_db
 
   indexer_token:
     image: api
-    build: api_backup
+    build: ./api
     volumes:
       - data:/app/contracts
-#    environment:
-#      SECRET_KEY: '${SECRET_KEY}'
-#      DB_NAME: '${DB_NAME}'
-#      DB_USER: '${DB_USER}'
-#      DB_PASSWORD: '${DB_PASSWORD}'
-#      DB_PORT: '5432'
-#      DB_HOST: api_db
-    command: python3 indexer_token.py
+    environment:
+      DB_NAME: '${DB_NAME}'
+      DB_USER: '${DB_USER}'
+      DB_PASSWORD: '${DB_PASSWORD}'
+      DB_PORT: '5432'
+      DB_HOST: api_db
+    command: python3 indexer_token_sale.py
     restart: on-failure
-#    depends_on:
-#      - api_db
+    depends_on:
+      - api_db
 
   ganache:
     image: trufflesuite/ganache-cli:latest
@@ -52,3 +50,4 @@ services:
 
 volumes:
   data:
+  db:
