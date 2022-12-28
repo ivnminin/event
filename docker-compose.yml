@@ -48,6 +48,20 @@ services:
     volumes:
       - data:/usr/src/app
 
+  api_v2:
+    image: api_v2
+    build: ./api_v2
+    environment:
+      DB_NAME: '${DB_NAME}'
+      DB_USER: '${DB_USER}'
+      DB_PASSWORD: '${DB_PASSWORD}'
+      DB_PORT: '5432'
+      DB_HOST: api_db
+    restart: on-failure
+    entrypoint: ./start.sh
+    depends_on:
+      - api_db
+
 volumes:
   data:
   db:
